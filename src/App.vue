@@ -1,19 +1,28 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <Header></Header>
+    <!-- 路由组件出口 -->
+    <router-view></router-view>
+    <!-- Footer在Home,Search显示，在Login,Register隐藏，通过v-show -->
+    <Footer v-show="$route.meta.show"></Footer>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Header from "./components/Header";
+import Footer from "./components/Footer";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    HelloWorld
+    Header,
+    Footer,
+  },
+  mounted() {
+    // TypeNav中的数据请求;因为 TypeNav很多pages都用到了，为了只发送一次请求，放在这里
+    this.$store.dispatch("categoryList");
   }
-}
+};
 </script>
 
 <style>
